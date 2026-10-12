@@ -2,6 +2,7 @@ package net.minecraft.client.renderer.color;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.mods.viatextures.ViaTextures;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.PotionUtils;
@@ -74,11 +75,18 @@ public class ItemColors {
         itemcolors.register((p_210237_0_, p_210237_1_) -> {
             return p_210237_1_ == 0 ? -1 : FilledMapItem.getColor(p_210237_0_);
         }, Items.FILLED_MAP);
+        // ViaTextures: the only post-1.14.4 item with a fixed tint (cherry / pale oak leaves are untinted)
+        Item mangroveLeaves = ViaItems.byEnglishName("mangrove leaves");
+        if (mangroveLeaves != null) {
+            itemcolors.register((p_viatex_0_, p_viatex_1_) -> 0x92C648, mangroveLeaves);
+        }
         return itemcolors;
     }
 
     public int getColor(ItemStack stack, int tintIndex) {
-        IItemColor iitemcolor = this.colors.getByValue(Registry.ITEM.getId(stack.getItem()));
+        // ViaTextures: colour a ViaBackwards stand-in stack like the real item it stands for
+        Item viaItem = ViaTextures.resolve(stack);
+        IItemColor iitemcolor = this.colors.getByValue(Registry.ITEM.getId(viaItem != null ? viaItem : stack.getItem()));
         return iitemcolor == null ? -1 : iitemcolor.getColor(stack, tintIndex);
     }
 

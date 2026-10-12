@@ -2,6 +2,7 @@ package net.minecraft.client.renderer;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import net.minecraft.client.mods.viatextures.ViaTextures;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ModelManager;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
@@ -35,7 +36,9 @@ public class ItemModelMesher {
     }
 
     public IBakedModel getItemModel(ItemStack stack) {
-        IBakedModel ibakedmodel = this.getItemModel(stack.getItem());
+        // ViaTextures: ViaBackwards stand-in stacks of post-1.14.4 items are drawn with the real item's model
+        Item viaItem = ViaTextures.resolve(stack);
+        IBakedModel ibakedmodel = this.getItemModel(viaItem != null ? viaItem : stack.getItem());
         return ibakedmodel == null ? this.modelManager.getMissingModel() : ibakedmodel;
     }
 

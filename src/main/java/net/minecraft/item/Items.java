@@ -891,6 +891,11 @@ public class Items {
     public static final Item SWEET_BERRIES = register("sweet_berries", new BlockNamedItem(Blocks.SWEET_BERRY_BUSH, (new Item.Properties()).group(ItemGroup.FOOD).food(Foods.SWEET_BERRIES)));
     public static final Item CAMPFIRE = register(Blocks.CAMPFIRE, ItemGroup.DECORATIONS);
 
+    static {
+        // ViaTextures: display-only items for post-1.14.4 items, registered after every vanilla item so ids don't move
+        ViaItems.register();
+    }
+
     private static Item register(Block p_221545_0_) {
         return register(new BlockItem(p_221545_0_, new Item.Properties()));
     }

@@ -9,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.mods.Mods;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
@@ -54,6 +55,13 @@ public class FirstPersonRenderer {
         this.mc = mcIn;
         this.renderManager = mcIn.getRenderManager();
         this.itemRenderer = mcIn.getItemRenderer();
+    }
+
+    /** Small Tools mod: shrinks the held item around its hand anchor (called right before the item itself is drawn). */
+    private void scaleSmallTools() {
+        if (Mods.smallTools) {
+            GlStateManager.scalef(Mods.SMALL_TOOLS_SCALE, Mods.SMALL_TOOLS_SCALE, Mods.SMALL_TOOLS_SCALE);
+        }
     }
 
     public void renderItem(LivingEntity entityIn, ItemStack heldStack, ItemCameraTransforms.TransformType transform) {
@@ -326,6 +334,11 @@ public class FirstPersonRenderer {
         boolean flag = hand == Hand.MAIN_HAND;
         HandSide handside = flag ? player.getPrimaryHand() : player.getPrimaryHand().opposite();
         GlStateManager.pushMatrix();
+        if (Mods.smallTools && !stack.isEmpty() && stack.getItem() != Items.FILLED_MAP) {
+            // Small Tools mod: sit lower on the screen so the view stays clear (applied outermost, in camera space)
+            GlStateManager.translatef(0.0F, Mods.SMALL_TOOLS_DROP, 0.0F);
+        }
+
         if (stack.isEmpty()) {
             if (flag && !player.isInvisible()) {
                 this.renderArmFirstPerson(equippedProgress, swingProgress, handside);
@@ -375,6 +388,7 @@ public class FirstPersonRenderer {
                 }
             }
 
+            this.scaleSmallTools();
             this.renderItemSide(player, stack, flag2 ? ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND : ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND, !flag2);
         } else {
             boolean flag3 = handside == HandSide.RIGHT;
@@ -455,6 +469,7 @@ public class FirstPersonRenderer {
                 this.transformFirstPerson(handside, swingProgress);
             }
 
+            this.scaleSmallTools();
             this.renderItemSide(player, stack, flag3 ? ItemCameraTransforms.TransformType.FIRST_PERSON_RIGHT_HAND : ItemCameraTransforms.TransformType.FIRST_PERSON_LEFT_HAND, !flag3);
         }
 
@@ -488,7 +503,7 @@ public class FirstPersonRenderer {
                 this.renderWaterOverlayTexture(partialTicks);
             }
 
-            if (this.mc.player.isBurning()) {
+            if (this.mc.player.isBurning() && !Mods.noFireOverlay) {
                 this.renderFireInFirstPerson();
             }
         }
@@ -574,7 +589,8 @@ public class FirstPersonRenderer {
             float f7 = -0.5F;
             float f8 = 0.5F;
             float f9 = -0.5F;
-            GlStateManager.translatef((float) (-(i * 2 - 1)) * 0.24F, -0.3F, 0.0F);
+            // vanilla is -0.3F; the fire is always drawn lower so it covers less of the screen
+            GlStateManager.translatef((float) (-(i * 2 - 1)) * 0.24F, Mods.LOW_FIRE_Y, 0.0F);
             GlStateManager.rotatef((float) (i * 2 - 1) * 10.0F, 0.0F, 1.0F, 0.0F);
             bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
             bufferbuilder.pos(-0.5D, -0.5D, -0.5D).tex((double) f2, (double) f4).endVertex();

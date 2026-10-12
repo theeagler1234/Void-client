@@ -13,6 +13,17 @@ public final class Mods {
 	public static boolean noParticles = false;
 	public static boolean noHurtCam = false;
 	public static boolean freecam = false;
+	/** Hides the first-person fire overlay entirely (the overlay is always drawn lower, see {@link #LOW_FIRE_Y}). */
+	public static boolean noFireOverlay = false;
+	/** Small Tools: held items are drawn smaller and lower in first person (for PvP visibility). */
+	public static boolean smallTools = false;
+
+	/** Vertical offset of the first-person fire overlay (vanilla -0.3F). Always applied, not a toggle. */
+	public static final float LOW_FIRE_Y = -0.5F;
+	/** Small Tools: uniform scale of the held item. */
+	public static final float SMALL_TOOLS_SCALE = 0.7F;
+	/** Small Tools: how far (in view space) the held item is lowered. */
+	public static final float SMALL_TOOLS_DROP = -0.15F;
 
 	/** TuffX+ ViaBlocks: show blocks newer than 1.14 (takes effect on the next server join). */
 	public static boolean viaBlocks = true;

@@ -13,9 +13,9 @@ public class ClickGuiScreen extends Screen {
 	private static final int PANEL_W = 150;
 	private static final int TITLE_H = 16;
 	private static final int ROW_H = 14;
-	private static final int COUNT = 6;
+	private static final int COUNT = 8;
 
-	private static final String[] NAMES = { "Fullbright", "No Particles", "No Hurt Cam", "Freecam", "ViaBlocks (rejoin)", "Below Y0 (rejoin)" };
+	private static final String[] NAMES = { "Fullbright", "No Particles", "No Hurt Cam", "Freecam", "ViaBlocks (rejoin)", "Below Y0 (rejoin)", "Small Tools", "No Fire Overlay" };
 
 	public ClickGuiScreen() {
 		super(new StringTextComponent("Mods"));
@@ -33,6 +33,10 @@ public class ClickGuiScreen extends Screen {
 			return Mods.viaBlocks;
 		case 5:
 			return Mods.belowY0;
+		case 6:
+			return Mods.smallTools;
+		case 7:
+			return Mods.noFireOverlay;
 		default:
 			return Mods.freecam;
 		}
@@ -54,6 +58,12 @@ public class ClickGuiScreen extends Screen {
 			break;
 		case 5:
 			Mods.belowY0 = !Mods.belowY0;
+			break;
+		case 6:
+			Mods.smallTools = !Mods.smallTools;
+			break;
+		case 7:
+			Mods.noFireOverlay = !Mods.noFireOverlay;
 			break;
 		default:
 			Mods.setFreecam(!Mods.freecam);

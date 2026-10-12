@@ -1,3 +1,9 @@
+# Void client
+**ADDED**
+- ViaTextures: items newer than 1.14.4 show their real textures/models even without TuffX+ (always on, no toggle). See VIATEXTURES.md
+- Low fire: the first-person fire overlay is always drawn lower; new ClickGUI toggle "No Fire Overlay" removes it entirely
+- Small Tools (ClickGUI): held items are drawn smaller and lower in first person so the view stays clear for PvP
+
 # TuffX+ port
 **ADDED**
 - TuffX+ client support: ViaBlocks (158 post-1.14 blocks) and Below Y0 (world y -64..-1), toggles in the ClickGUI. See TUFFX_PORT.md

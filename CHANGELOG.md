@@ -6,7 +6,7 @@
 
 # TuffX+ port
 **ADDED**
-- TuffX+ client support: ViaBlocks (158 post-1.14 blocks) and Below Y0 (world y -64..-1), toggles in the ClickGUI. See TUFFX_PORT.md
+- TuffX+ client support: ViaBlocks (158 post-1.14 blocks) and Below Y0 (world y -64..-1), toggles in the ClickGUI. See [TUFFX_PORT.md](TUFFX_PORT.md)
 
 # Eaglercraft 1.14.4 U1 Changelog
 **BUG FIXES**
